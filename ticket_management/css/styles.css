@@ -1,0 +1,90 @@
+.color_new{margin-bottom:7px;}
+.color_nlabel{    
+	font-size: 12px;
+    color: #C94;
+}
+
+.login-margin-top{
+    margin-top: 95px;
+}
+.text-center{
+    margin: 0 auto;
+}
+.login-outer{
+    border: 1px solid #ced4da;
+    padding: 15px;
+    border-radius: 10px;
+}
+.add-button{
+    float: right;
+}
+.navbar-collapse ul li{
+    padding: 5px;
+}
+
+#creditor_li{
+    display: block; 
+    position:relative
+}
+
+#debitor_li{
+    display: block; 
+    position:relative
+}
+
+.ui-autocomplete {
+    position: absolute;
+}
+
+b{
+    color:#007bff;
+}
+.anchor_css{
+    text-decoration: none;
+    color: #000;
+}
+.back_link a{
+    color: #007bff;
+}
+
+@media  screen and (max-width: 600px) {
+
+    .cash_book_res{
+        width:100%;
+    }
+}
+
+.table td, .table th {
+    padding: .50rem !important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    font-size: 15px;
+}
+
+.header_date_div{
+    margin:  auto;
+}
+.header_date{
+    width:20%;
+}
+
+
+.hei1 {height: 425px !important;}
+
+.hei2 {height: 425px !important;}
+
+.coldd{color:#212529;}
+.float_l{float:left;}
+.float_l1{float:left;}
+.left_pad{padding-left:0px !important;}
+.right_pad{padding-right:0px !important;}
+.left_s{padding-left: 28px;font-weight: normal;}
+.left_s1{padding-left: 60px;}
+.nbcolor{background-color: #f2f2f2;}
+ .lable_f{position: absolute;margin: -31px 0 0 177px;cursor: pointer;}
+ .navbar-dark .navbar-nav .nav-link{color: #fff !important;}
+ 
+.hei_new{min-height:250px !important;max-height:400px;overflow:hidden;overflow-y:auto;}
+.color_r1{color:#007bff;width:103px !important;padding-top:5px;padding-bottom:5px;}
+.color_r2{color:#007bff;width:103px !important;padding-top:5px;padding-bottom:5px;}
+.color_r3{color:#007bff;width:127px !important;padding-top:5px;padding-bottom:5px;}

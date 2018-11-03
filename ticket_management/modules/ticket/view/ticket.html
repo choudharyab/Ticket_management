@@ -1,0 +1,159 @@
+
+<div ng-include="'modules/navbar/view/navbar.html'"></div>
+
+<div class="container">
+
+<div class="row login-margin-top">
+  <div class="col-md-5"><h3>Ticket List &nbsp;&nbsp; <span id="success_msg" style="font-size:15px;color:green">{{success_msg}}</span>
+    <span id="delete_msg" style="font-size:15px;color:red">{{delete_msg}}</span></h3></div>
+  <div class="col-md-7">
+    <button class="btn btn-rounded btn-primary add-button" ng-click="add_btn_clicked()" data-toggle="modal" data-target="#example2"><i class="fa fa-plus" aria-hidden="true"></i>  Add Ticket</button>
+  </div>
+  
+</div>
+
+<div class="hei1">
+		<div class="table-responsive" id="fixedheader">	
+            <table class="table">
+               
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">S.No</th>
+      <th scope="col">Ticket Number</th>
+      <th scope="col">Ticket Description</th>
+      <th scope="col">Created Date Time</th>
+      <th scope="col">Last updated by</th>
+      <th scope="col">Raised By</th>
+      <th scope="col">priority</th>
+      <th scope="col">Ticket status</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="data in ticket_data track by $index">
+        <th scope="row">{{$index+1}}</th>
+        <td>{{data.ticket_number}}</td>
+        <td>{{data.ticket_description}}</td>
+        <td>{{data.created_at | date :"MMM d, y h:mm:ss a"}}</td>
+        <td>{{data.updated_person }}</td>
+        <td>{{data.user.email}}</td>
+      
+        <td ng-if="data.priority.priority_name=='Low'"><span style="color:orange">{{data.priority.priority_name}}</span></td>
+        <td ng-if="data.priority.priority_name=='High'"><span style="color:green">{{data.priority.priority_name}}</span></td>
+        <td ng-if="data.priority.priority_name=='Very High'"><span style="color:red">{{data.priority.priority_name}}</span></td>
+        <td ng-if="data.ticket_status.status=='Pending'"><span style="color:red">{{data.ticket_status.status}}</span></td>
+         <td ng-if="data.ticket_status.status=='Running'"><span style="color:yellow">{{data.ticket_status.status}}</span></td>
+         <td ng-if="data.ticket_status.status=='Completed'"><span style="color:green">{{data.ticket_status.status}}</span></td>
+        <td><i class="fa fa-edit font_six" title="Edit" aria-hidden="true" ng-click="get_ticket_details_by_id(data.id)"></i> | <i class="fa fa-trash-o font_six" title="Delete" aria-hidden="true" ng-bootbox-confirm="Are you sure to delete this Ticket details?"
+          ng-bootbox-confirm-action="delete_ticket_details(data.id)" ng-bootbox-confirm-action-cancel="confirmCallbackCancel()"></i>
+        </td>
+      </tr>
+     
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+<!-- modal start -->
+
+<div class="modal fade" id="example2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+            <form>
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 ng-hide="hide_save" class="modal-title" id="exampleModalLabel">CREATE NEW TICKET</h5>
+                     <h5 ng-hide="hide_update" class="modal-title" id="exampleModalLabel">UPDATE  TICKET</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 float_l left_pad">
+           
+                        <input type="text" placeholder="Ticket Number" class="form-control"  ng-model="ticket.ticket_number" readonly>
+                    
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 float_l right_pad">
+           
+                        <input type="text" placeholder="Ticket Description" class="form-control"  ng-model="ticket.ticket_description">
+                    
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 float_l left_pad">
+                        <select class="form-control" id="exampleFormControlSelect1" ng-model="ticket.ticket_status_id">
+                            <option ng-selected="true">---Ticket Status---</option>
+                            <option ng-repeat="data in ticketstatus_data" value={{data.id}}>{{data.status}}</option>
+                        </select>
+                       
+                    
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 float_l right_pad">
+                      
+                        <select class="form-control" id="exampleFormControlSelect1" ng-model="ticket.priority_id">
+                            <option ng-selected="true">---Select Priority---</option>
+                            <option ng-repeat="data in priority_data" value={{data.id}}>{{data.priority_name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                   
+        
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12  float_l left_pad">
+                       
+                        <select class="form-control" id="exampleFormControlSelect1" ng-model="ticket.user_id">
+                            <option ng-selected="true">---Select Raised By---</option>
+                            <option ng-repeat="data in user_data" value={{data.id}}>{{data.email}}</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12  float_l right_pad">
+                           
+                      <div class="form-group header_date pull-left">
+                        <input type="text" id="datepicker44" placeholder="Create Date Time" class="form-control"  style="width:222px;"  ng-model="ticket.created_date">
+                        <label for="datepicker44" class="lable_f"> <i class="fa fa-calendar" aria-hidden="true"></i></label>
+                      </div>
+                    </div>
+                    <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12  float_l left_pad">
+                            <input type="text" placeholder="Last Updated By" class="form-control" ng-model="ticket.updated_person">
+                    </div>
+                 
+                    <div class="clearfix"></div>
+                   
+                    
+                    
+                </div>
+                <div class="modal-footer" ng-hide="hide_save">
+                  
+                    
+                    <button type="submit" class="btn btn-primary" ng-click="add_ticket_details()" >Save</button>
+                </div>
+                <div class="modal-footer" ng-hide="hide_update">
+                   
+                    
+                    <button type="submit" class="btn btn-primary" ng-click="update_ticket_details()" >Update</button>
+                </div>
+                </div>
+            </form>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+$("#fixedheader").tableHeadFixer(); 
+});
+
+$(document).ready(function() {
+$("#fixedheader1").tableHeadFixer(); 
+});
+</script>
+<script>
+   var picker = new Pikaday({ field: document.getElementById('datepicker'),format: 'D/M/YYYY',yearRange: [2000,2050] });
+   
+   var picker2 = new Pikaday({ field: document.getElementById('datepicker2'),format: 'D/M/YYYY',yearRange: [2000,2050] });
+   
+   var picker2 = new Pikaday({ field: document.getElementById('datepicker4'),format: 'D/M/YYYY',yearRange: [2000,2050] });
+   var picker2 = new Pikaday({ field: document.getElementById('datepicker44'),format: 'D/M/YYYY',yearRange: [2000,2050] });
+   var picker2 = new Pikaday({ field: document.getElementById('datepicker33'),format: 'D/M/YYYY',yearRange: [2000,2050] });
+</script>
+    
